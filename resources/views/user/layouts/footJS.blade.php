@@ -13,7 +13,7 @@
 <script src="{{ asset('user/assets/js/plugins/bootstrap-datepicker.js') }} " type="text/javascript"></script>
 
 <!--  Google Maps Plugin    -->
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+{{-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> --}}
 
 <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 <script src="{{ asset('user/assets/js/now-ui-kit.js?v=1.2.0') }}" type="text/javascript"></script>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mode\User;
+namespace App\Model\Category_post;
 
 use Illuminate\Database\Eloquent\Model;
 

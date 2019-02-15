@@ -11,29 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('user.home');
+Route::group(['namespace' => 'User'], function () {
+    
+    Route::resource('/', 'HomeController');
+    Route::resource('post', 'PostController');
+    
 });
 
 
-Route::get('post', function () {
-    return view('user.post');
-})->name('user.post');
-
-
-// admin
-Route::get('admin/home', function () {
-    return view('admin.home');
-})->name('admin.home');
-
-Route::get('admin/post', function () {
-    return view('admin.pages.post.index');
-})->name('admin.home');
-
-Route::get('admin/tags', function () {
-    return view('admin.pages.tags.index');
-})->name('admin.tags');
-
-Route::get('admin/category', function () {
-    return view('admin.pages.category.index');
-})->name('admin.category');
+Route::group(['namespace' => 'Admin'], function () {
+    Route::get('admin/home', 'HomeController@index');
+    Route::resource('admin/post', 'PostController');
+    Route::resource('admin/tags', 'TagController');
+    Route::resource('admin/category', 'CategoryController');
+    
+});

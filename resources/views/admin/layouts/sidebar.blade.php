@@ -64,21 +64,21 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-      <a class="nav-link" href="/admin/post">
+    <a class="nav-link" href="{{ route('post.index') }}">
         <i class="fas fa-fw fa-image"></i>
         <span> Post </span></a>
     </li>
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-    <a class="nav-link" href="/admin/tags">
+    <a class="nav-link" href="{{ route('tags.index') }}">
         <i class="fas fa-fw fa-tag"></i>
         <span>Tags</span></a>
     </li>
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-      <a class="nav-link" href="/admin/category">
+      <a class="nav-link" href="{{ route('category.index') }}">
         <i class="fas fa-fw fa-list-alt"></i>
         <span>Categories</span></a>
     </li>

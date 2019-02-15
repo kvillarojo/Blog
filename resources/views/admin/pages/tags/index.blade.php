@@ -19,16 +19,16 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                {!! Form::open(['url' => 'admin/post/create', 'method' => 'post']) !!}
-                    <div class="row">
+                {!! Form::open(['action' => 'Admin\TagController@store', 'method' => 'post']) !!}
+                    <div class="row justify-content-md-center">
                         <div class="col-md-6 col-md-offset-2">
                             <p class="category"> Tag Title </p>
                             <div class="form-group">
-                                {!! Form::text('title', '', ['class' => 'form-control']); !!}
+                                {!! Form::text('tagname', '', ['class' => 'form-control']); !!}
                             </div>
                             <p class="category"> Slug </p>
                             <div class="form-group">
-                                {!! Form::text('title', '', ['class' => 'form-control']); !!}
+                                {!! Form::text('slugname', '', ['class' => 'form-control']); !!}
                             </div>
                             <div class="form-group text-right"> 
                                 {!! Form::submit('Submit', ['class' => 'btn btn-info']); !!}

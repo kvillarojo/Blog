@@ -13,6 +13,8 @@
 
   @include('admin.layouts.head')
 
+  @yield('styles')
+
 </head>
 
 <body id="page-top">
@@ -32,7 +34,7 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
+          @include('errors.message')
           @yield('content')
 
         </div>
@@ -74,6 +76,8 @@
   </div>
 
     @include('admin.layouts.footerjs')
+
+    @yield('scripts')
 
 </body>
 
