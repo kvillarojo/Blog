@@ -10,3 +10,4 @@
 - Copy `.env.example` to `.env`
 - Run `composer install` or `php composer.phar install` to install required packages
 - Run `php artisan key:generate` to create application key
+- run `php artisan storage:link` to create link from storage to public folder
