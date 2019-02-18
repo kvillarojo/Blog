@@ -20,7 +20,11 @@ class PostController extends Controller
      
     public function index()
     {
-        return view('admin.pages.post.index');
+        $post = Post::all();
+        if (!empty($post)) {
+            return view('admin.pages.post.index')->with('posts', $post);    
+        }
+        
     }
 
     /**
@@ -30,7 +34,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.post.create');
     }
 
     /**
@@ -99,7 +103,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+       
     }
 
     /**
@@ -110,7 +114,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::getPostById($id);
+        return view('admin.pages.post.update')->with('posts', $post);  
     }
 
     /**
@@ -124,7 +129,6 @@ class PostController extends Controller
     {
 
     }
-
     /**
      * Remove the specified resource from storage.
      *

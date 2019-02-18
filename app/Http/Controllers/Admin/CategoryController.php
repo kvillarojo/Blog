@@ -15,8 +15,10 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('admin.pages.category.index');
+    { 
+        $categories = Category::getCategories();
+        return view('admin.pages.category.index')->with('categories', $categories);
+        //   return response()->json($categories, 404);
     }
 
     /**
@@ -26,7 +28,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.category.create');
     }
 
     /**
@@ -40,8 +42,8 @@ class CategoryController extends Controller
         try {
             
             $data = array(
-                'name' => $request->input('catname'),
-                'slug' => $request->input('slugname')
+                'name' => ucwords($request->input('catname')),
+                'slug' => ucwords($request->input('slugname'))
             );
 
             if (Category::create($data)) {
@@ -72,7 +74,11 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cat_id = decrypt($id);
+
+        $categories = Category::getCategoryById($cat_id);
+        return view('admin.pages.category.update')->with('category', $categories);
+        // return $categories;
     }
 
     /**
@@ -82,9 +88,23 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryStoreRequest $request, $id)
     {
-        //
+    
+        try {
+            
+            $data = [
+                'name' => ucwords($request->input('catname')),
+                'slug' => ucwords($request->input('slugname'))
+            ];
+
+            if (Category::where('id', $id)->update($data)) {
+                return redirect('admin/category')->with('success', 'Update Successfull');
+            }
+
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(array('error' => $e->getMessage()))->withInput();
+        }
     }
 
     /**
@@ -95,6 +115,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+       try {
+
+            $cat_id = decrypt($id);
+            if (Category::destroy($cat_id)) {
+                return redirect('admin/category')->with('success', 'Remove Successfull');
+            }
+       } catch (\Exception $e) {
+           return redirect()->back()->withErrors(array('error' => $e->getMessage()))->withInput();
+       }
+       
+
     }
 }

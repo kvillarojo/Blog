@@ -19,7 +19,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.tags.index');
+        $tag = Tag::all('id', 'name', 'slug');
+        return view('admin.pages.tags.index')->with('tags', $tag);
+        //  return response()->json($tag, 404);
     }
 
     /**
@@ -29,7 +31,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.tags.create');
     }
 
     /**
@@ -74,7 +76,15 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        //
+        try {
+            $tag_id = decrypt($id);
+            $tag = Tag::getTagById($tag_id);
+            if ($tag) {
+                return view('admin.pages.tags.update')->with('tag', $tag);
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(array('error' => $e->getMessage()))->withInput();
+        }
     }
 
     /**
@@ -84,9 +94,22 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TagStoreRequest $request, $id)
     {
-        //
+        try {
+            
+            $data = [
+                'name' => ucfirst($request->input('tagname')),
+                'slug' => ucfirst($request->input('slugname'))
+            ];
+
+            if (Tag::where('id', $id)->update($data)) {
+                return redirect('admin/tags')->with('success', 'Update Successfull');
+            }
+
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(array('error' => $e->getMessage()))->withInput();
+        }
     }
 
     /**
@@ -97,6 +120,14 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // return $id;
+        try {
+            $tag_id = decrypt($id);
+            if (Tag::destroy($tag_id)) {
+                return redirect('admin/tags')->with('success', 'Remove Successfull');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(array('error' => $e->getMessage()))->withInput();
+        }
     }
 }

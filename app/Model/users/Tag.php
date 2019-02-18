@@ -13,4 +13,10 @@ class Tag extends Model
         'name' 
     ];
 
+
+    public static function getTagById($id){
+        $tag = self::findOrFail($id);
+        return  !empty($tag) ? $tag : 'Failed to locate tag';
+    }
+
 }

@@ -1,5 +1,11 @@
 @extends('admin.app')
 
+@prepend('styles')
+
+  <!-- Custom styles for this page -->
+  <link href="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+@endprepend
+
 @section('content')
     
     <!-- Page Heading -->
@@ -16,27 +22,50 @@
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-primary"> Create Category </h6>
+                        <a href="{{ route('category.create') }}" class="btn btn-success" style="float:right;"> Create </a>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
-                        {!! Form::open(['action' => 'Admin\CategoryController@store', 'method' => 'post']) !!}
-                        <div class="row justify-content-md-center">
-                            <div class="col col-md-6">
-                                <p class="category"> Category Name </p>
-                                <div class="form-group">
-                                    {!! Form::text('catname', '', ['class' => 'form-control']); !!}
-                                </div>
-                                <p class="category"> Slug </p>
-                                <div class="form-group">
-                                    {!! Form::text('slugname', '', ['class' => 'form-control']); !!}
-                                </div>
-                                <div class="form-group text-right"> 
-                                {!! Form::submit('Submit', ['class' => 'btn btn-info']); !!}
-                                </div>
-                            </div>
-                        </div>     
-                        {!! Form::close() !!}
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th> Category Name</th>
+                                        <th> Tag Name</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($categories as $category)
+                                        <tr>
+                                            <td> {{ $category->name }}</td>
+                                            <td> {{ $category->slug }}</td>
+                                            <td  class="form-inline" style="float:right">
+                                                {!! Form::open(['action' => ['Admin\CategoryController@edit', encrypt($category->id)], 'method' => 'GET']) !!}
+                                                    <button class="btn btn-primary" type="submit"> Edit </button>
+                                                {!! Form::close() !!}
+
+                                                {!! Form::open(['action' => ['Admin\CategoryController@destroy', encrypt($category->id)], 'method' => 'DELETE', 'style' => "margin-left:5px"]) !!}
+                                                    <button class="btn btn-danger" type="submit"> Remove </button>
+                                                {!! Form::close() !!}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
 @endsection
+
+@prepend('scripts')
+
+    <!-- Page level plugins -->
+    <script src="{{ asset('admin/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{ asset('admin/js/demo/datatables-demo.js') }}"></script>
+
+@endprepend

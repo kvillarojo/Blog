@@ -12,5 +12,18 @@ class categories extends Model
         'name', 
         'slug'
     ];
+
+    public static function getCategories()
+    {
+        return self::all();
+    }
+
+    public static function getCategoryById($id)
+    {
+      
+        $category = self::find($id);
+        return $category;
+        
+    }
     
 }

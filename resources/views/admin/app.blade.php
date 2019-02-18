@@ -13,7 +13,7 @@
 
   @include('admin.layouts.head')
 
-  @yield('styles')
+  @stack('styles')
 
 </head>
 
@@ -77,7 +77,7 @@
 
     @include('admin.layouts.footerjs')
 
-    @yield('scripts')
+    @stack('scripts')
 
 </body>
 

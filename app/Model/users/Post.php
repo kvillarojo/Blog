@@ -51,4 +51,22 @@ class Post extends Model
 
         return 'no_image.jpg';
     }
+
+    public static function getPostById($id)
+    {
+        $post_id = decrypt($id);
+
+        try {
+
+            $post = self::findOrFail($post_id);
+            if (!empty($post)) {
+                return $post;
+            }else{
+                return ['error' => 'Unable to locate project'];
+            }
+
+        } catch (\Exeption $e) {
+            return $e->getMessage();
+        }
+    }
 }
