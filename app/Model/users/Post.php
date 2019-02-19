@@ -18,6 +18,18 @@ class Post extends Model
         'posted_by'
     ];
 
+
+    public static function post_tag()
+    {
+        return $this->hasMany('App\Model\users\post_tag', 'post_id');    
+    }
+
+    public static function category_post()
+    {
+        return $this->hasMany('App\Model\users\Category_post', 'post_id');    
+    }
+
+
     public function uploadImg($field)
     {
     

@@ -1,11 +1,21 @@
 @extends('admin.app')
 
 @prepend('styles')
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <style>
       input.form-control.danger {
-          border-color: #ff0000;
-          -moz-box-shadow: 0 0 8px 0 black;
-          box-shadow: 0 0 7px 0 #ff0000;
+        border-color: #ff0000;
+        -moz-box-shadow: 0 0 8px 0 black;
+        box-shadow: 0 0 7px 0 #ff0000;
+      }
+
+      .mt-9{
+        margin-top: 9px;
+      }
+
+      .mt-15{
+        margin-top: 15px;
       }
     </style>
 @endprepend
@@ -32,6 +42,7 @@
                 <div class="row justify-content-md-center">
                     <div class="col-md-6">
                         <p class="category"> Post Title </p>
+
                         <div class="form-group">
                             {!! Form::text('title', '', ['class' => 'form-control' ]); !!}
                             {{-- <small style="color:red" class="alert-link">
@@ -40,7 +51,7 @@
                                 @endif
                             </small> --}}
                         </div>
-
+                        
                         <p class="category"> Post Sub Title </p>
                         <div class="form-group">
                             {!! Form::text('sub-title', '', ['class' => 'form-control']); !!}
@@ -72,13 +83,30 @@
                             <div class="col-md-6">
                                 <p class="category"> Publish </p>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                <label class="form-check-label" for="inlineCheckbox1"> Yes </label>
+                                    {!! Form::checkbox('publish', 1, false) !!}
+                                    <label class="form-check-label" for="inlineCheckbox1"> Yes </label>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mt-9">
+                                <p class="category"> Select Tags </p>
+                                {!! Form::select('tagName[]',
+                                    [],  
+                                    null, array('class' => 'form-control', 'id' => 'tag_name', 'multiple' =>"multiple")) 
+                                !!}    
+                            </div>
+                            <div class="col-md-12 mt-15">
+                                <p class="category"> Select Category </p>
+                                {!! Form::select('catName[]',
+                                   [],  
+                                    null, array('class' => 'form-control', 'id'=>'cat_name', 'multiple' =>"multiple")) 
+                                !!}
                             </div>
                         </div>
                     </div>
                 </div>     
+
                 <p class="category"> Body </p>
                 <div class="form-group"> 
                     {!! Form::textarea('post', '', ['class' => 'textarea']); !!}
@@ -101,7 +129,23 @@
       {{-- CK EDITOR --}}
       <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
       <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
+
       <script>
-        $('textarea').ckeditor();
+            $('textarea').ckeditor();
       </script>
+     
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+      <script>
+            $("#cat_name").select2({
+                width: 'resolve', // need to override the changed default
+                data: {!! $categories !!}
+            });
+
+            $("#tag_name").select2({
+                width: 'resolve', // need to override the changed default
+                data: {!! $tags !!}
+            });
+      </script>
+    
+      
     @endprepend
