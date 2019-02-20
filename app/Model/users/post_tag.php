@@ -2,8 +2,6 @@
 
 namespace App\Model\post_tag;
 
-use App\Model\users\Post;
-use App\Model\users\Tag;
 use Illuminate\Database\Eloquent\Model;
 
 class post_tag extends Model
@@ -16,13 +14,13 @@ class post_tag extends Model
         'tag_id'
     ];
 
-    public static function post()
+    public function post()
     {
-        return $this->belongsTo('Post');
+        return $this->belongsTo('App\Model\users\Post', 'id', 'post_id');
     }
 
-    public static function tags()
+    public function tags()
     {
-        return $this->belongsTo('Tag');
+        return $this->belongsTo('App\Model\users\Tag', 'id', 'tag_id');
     }
 }

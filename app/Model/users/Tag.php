@@ -13,6 +13,11 @@ class Tag extends Model
         'name' 
     ];
 
+    
+    public function post_tag()
+    {
+        return $this->hasMany('App\Model\users\post_tag', 'tag_id');
+    }
 
     public static function getTagById($id){
         $tag = self::findOrFail($id);

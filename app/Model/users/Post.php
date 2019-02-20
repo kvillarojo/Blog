@@ -19,12 +19,12 @@ class Post extends Model
     ];
 
 
-    public static function post_tag()
+    public function post_tag()
     {
         return $this->hasMany('App\Model\users\post_tag', 'post_id');    
     }
 
-    public static function category_post()
+    public function category_post()
     {
         return $this->hasMany('App\Model\users\Category_post', 'post_id');    
     }

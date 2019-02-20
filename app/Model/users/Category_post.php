@@ -15,12 +15,12 @@ class Category_post extends Model
         'category_id'
     ];
 
-    public static function post()
+    public function post()
     {
         return $this->belongsTo('Post', 'id', 'post_id');
     }
 
-    public static function category()
+    public function category()
     {
         return $this->belongsTo('categories', 'id', 'category_id');
     }
