@@ -19,20 +19,23 @@ class Post extends Model
     ];
 
 
-    public function post_tag()
+    public function postTag()
     {
-        return $this->hasMany('App\Model\users\post_tag', 'post_id');    
+        return $this->belongsToMany('App\Model\users\post_tag');    
     }
 
-    public function category_post()
+    public function categoryTag()
     {
-        return $this->hasMany('App\Model\users\Category_post', 'post_id');    
+        return $this->belongsToMany('App\Model\users\Category_post', 'post_id');    
     }
 
-
-    public function uploadImg($field)
+    public static function getRouteKeyName()
     {
-    
+    	return 'slug';
+    }
+
+    public static function uploadImg($field)
+    {
         // Option one for uploading images
         if (Request::hasFile($field)) {
             // get filename with extention
@@ -59,7 +62,6 @@ class Post extends Model
         //         return $newName;
         //     }
         // }
-
 
         return 'no_image.jpg';
     }

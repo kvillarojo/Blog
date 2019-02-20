@@ -38,7 +38,7 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                {!! Form::open(['action' => 'Admin\PostController@store', 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
+                {!! Form::open(['action' => 'Admin\PostController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                 <div class="row justify-content-md-center">
                     <div class="col-md-6">
                         <p class="category"> Post Title </p>

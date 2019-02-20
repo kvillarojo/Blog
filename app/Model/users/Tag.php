@@ -13,12 +13,14 @@ class Tag extends Model
         'name' 
     ];
 
-    
-    public function post_tag()
+    public function posts()
     {
-        return $this->hasMany('App\Model\users\post_tag', 'tag_id');
+    	return $this->belongsToMany('App\Model\user\post','post_tags')->orderBy('created_at','DESC')->paginate(5);
     }
-
+    public static function getRouteKeyName()
+    {
+    	return 'slug';
+    }
     public static function getTagById($id){
         $tag = self::findOrFail($id);
         return  !empty($tag) ? $tag : 'Failed to locate tag';

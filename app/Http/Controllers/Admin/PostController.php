@@ -6,20 +6,23 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Model\users\Post;
+use App\Model\users\post_tag;
 use App\Model\users\categories as Category;
+use App\Model\users\Category_post;
 use App\Model\users\Tag;
+
 use App\Http\Requests\PostStoreRequest;
 // use App\Http\Resources\Posts as PostResource;
 
 class PostController extends Controller
 {
+
+   
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-     
     public function index()
     {
         $post = Post::all();
@@ -49,59 +52,55 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
 
-        
-        
-        // try {
-        //     // if($request->hasFile('cover_image')){
-        //     //     // get filename with extention
-        //     //     $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
-        //     //     // get just filename
-        //     //     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        //     //     // Get just ext
-        //     //     $extension = $request->file('cover_image')->getClientOriginalExtension();
-        //     //     // filename to store
-        //     //     $filenNameToStore = $filename.'_'. time().'.'.$extension;
-        //     //     // upload the image
-        //     //     $path  = $request->file('cover_image')->storeAs('public/cover_images', $filenNameToStore);
-        //     // }else{
-        //     //     $filenNameToStore = "no_image.jpg";
-        //     // }
-    
-        //     // // insert posts
-        //     // $post =  new Post();
-        //     // $post->title = ucwords($request->input('title'));
-        //     // $post->body = $request->input('body');
-        //     // $post->user_id = auth()->user()->id;
-        //     // $post->cover_image = $filenNameToStore;
-           
-        //     // if ($post->save()) {
-        //     //     return redirect('/posts')->with('success', 'Post Created');   
-        //     // }else{
-        //     //     return redirect('/posts.create')->with('error', 'Unable to create post');
-        //     // }
- 
-        //     $posts = new Post();
+        try {
 
-        //     $data = array(
-        //         'title' => $request->input('title'),
-        //         'subtitle' => $request->input('sub-title'),
-        //         'slug' => $request->input('slug'),
-        //         'body' => $request->input('post'),
-        //         'posted_by' => 1,
-        //         'image' => $posts->uploadImg('cover_image'),
-        //     );
-        //         if ($posts->create($data)) {
-        //             return redirect('/admin/post')->with('success', 'Post Created');
-        //         }
-        //     } catch (\Exception $e) {
-        //         // return redirect('/admin/post')->with('success', 'Post Created');
-        //         return redirect()->back()->withErrors(array('error' => $e->getMessage()))->withInput();       
-        //     }
+            $post = new Post();
 
+            $data = array(
+                'title' => $request->input('title'),
+                'subtitle' => $request->input('sub-title'),
+                'slug' => $request->input('slug'),
+                'body' => $request->input('post'),
+                'posted_by' => 1,
+                'image' => $post->uploadImg('cover_image'),
+            );
+
+            
+
+            // $post_tag =  [
+            //     'tag_id' => $request->input('tagname')
+            // ];
+
+            // $category_tag = [
+            //     'category_id' => $request->input('catname')
+            // ];
+
+       
+            // if ($post_id = $post->create($data)) {
+            //     if ($postTag_id = post_tag::initPostTag($post_id->id)) {
+            //         if (!category_tag::initCategoryTag($postTag_id->id)) {
+            //             post_tag::destroy($postTag_id);
+            //             self::destroy($post_id->id);
+            //         }
+            //         return redirect('/admin/post')->with('success', 'Post Created');
+
+            //     } else {
+            //         self::destroy($article->id);
+            //     }
+            
+                // return redirect('/admin/post')->with('success', 'Post Created');
+            // }
+                
             return response()->json($request, 404);
+
+
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(array('error' => $e->getMessage()))->withInput();       
+        }
+            // return response()->json($request, 404);
     }
 
     /**

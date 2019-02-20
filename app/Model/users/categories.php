@@ -13,14 +13,23 @@ class categories extends Model
         'slug'
     ];
 
+    public function posts()
+    {
+    	return $this->belongsToMany('App\Model\user\post','category_posts')->orderBy('created_at','DESC')->paginate(5);
+    }
+
+    public static function getRouteKeyName()
+    {
+    	return 'slug';
+    }
+
     public static function getCategories()
     {
         return self::all();
     }
 
     public static function getCategoryById($id)
-    {
-      
+    {      
         $category = self::find($id);
         return $category;
         
